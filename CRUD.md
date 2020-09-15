@@ -15,7 +15,7 @@ db.test.insertOne({"key1":"value1", key2:"value2"})
 
 * Insert document with nested object
 ```mongojs
-db.test.insertOne({"key1":"value1", key2:"value2", key3: {"nestedKey1":"netsedValue1", "nestedKey2":"nestedValue2"}})
+db.test.insertOne({"key1":"value1", key2:"value2", key3: {"nestedKey1":"nestedValue1", "nestedKey2":"nestedValue2"}})
 ```
 
 * Insert many documents
@@ -32,6 +32,11 @@ db.test.find().pretty()
 * Search for one document
 ```mongojs
 db.test.findOne({"key1" : "value1"})
+```
+
+* Search for documents where nested value equals to something
+```mongojs
+db.test.find({"key3.nestedKey1" : "nestedValue1"})
 ```
 
 * Search for all the documents with empty filter
@@ -55,12 +60,17 @@ db.test.find({}, {"key1":1, _id:0})
 db.test.updateMany({}, {$set: {"newKey1" : "newValue1"}})
 ```
 
+* Update all documents with nested document
+```mongojs
+db.test.updateMany({}, {$set: {"newKey1" : {"nestedKey1" : "nestedValue1", "nestedKey1" : "netstedValue =2"}}})
+```
+
 * updateOne() and updateMany() adds / modifies document with provided parameters / values using $set. update() rewrites object with data provided
 ```mongojs
 db.test.update({"key1" : "value1"}, {"theOnlyKey1" : "theOnlyValue1"})
 ```
 
-* It's recommended to use .replaceOne() instead of .modify()
+* It's recommended to use .replaceOne() instead of .update()
 ```mongojs
 db.test.replaceOne({"key1" : "value1"}, {"theOnlyKey1" : "theOnlyValue1"})
 ```
@@ -90,4 +100,9 @@ db.test.find().forEach(<function>)
 * Last bullet, another example - print each record:
 ```mongojs
 db.test.find().forEach((testDate) => {printjson(testData)})
+```
+
+* Return value of specific parameter from a document
+```mongojs
+db.test.findOne({"key1" : "value1"}).key2
 ```
