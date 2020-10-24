@@ -127,3 +127,40 @@ db.collection.find({"Key1": {$all: ["Value1", "Value2"]}})
 ```mongojs
 db.collection.find({"Key1": {$elemMatch: {"Key2": "Value2", "Key3": {$gt: 42}}}})
 ``` 
+
+## Projection
+Projection allows to return only requested parameters for the object. Parameter must have value 1 in find() to be returned:
+```mongojs
+db.collection.find({}, {"Key1": 1, "Key2": 1, "Key3": 1})
+```
+
+ObjectId is always returned. It has to be explicitly set to 0 in order not to return:
+```mongojs
+db.collection.find({}, {"Key1": 1, "Key2": 1, "Key3": 1, _id: 0})
+```
+
+Embedded parameters can be projected as well:
+```mongojs
+db.collection.find({}, {"Key1": 1, "Key2.EmbeddedKey1": 1})
+```
+
+## Other
+* .sort(). Sorting. 1 - ascending, -1 - descending:
+```mongojs
+db.collection.find().sort({"Key1": 1, "Key2": -1})
+```
+
+* .skip(). Skip some documents, can be used for pagination:
+```mongojs
+db.collection.find().skip(10)
+```
+
+* .limit(). Limit amount of records returned by cursor:
+```mongojs
+db.collection.find().limit(10)
+```
+
+And now everything at once:
+```mongojs
+db.collection.find().sort({"Key1": 1, "Key2": -1}).skip(100).limit(10).pretty()
+```
