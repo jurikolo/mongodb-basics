@@ -129,19 +129,29 @@ db.collection.find({"Key1": {$elemMatch: {"Key2": "Value2", "Key3": {$gt: 42}}}}
 ``` 
 
 ## Projection
-Projection allows to return only requested parameters for the object. Parameter must have value 1 in find() to be returned:
+* Projection allows to return only requested parameters for the object. Parameter must have value 1 in find() to be returned:
 ```mongojs
 db.collection.find({}, {"Key1": 1, "Key2": 1, "Key3": 1})
 ```
 
-ObjectId is always returned. It has to be explicitly set to 0 in order not to return:
+* ObjectId is always returned. It has to be explicitly set to 0 in order not to return:
 ```mongojs
 db.collection.find({}, {"Key1": 1, "Key2": 1, "Key3": 1, _id: 0})
 ```
 
-Embedded parameters can be projected as well:
+* Embedded parameters can be projected as well:
 ```mongojs
 db.collection.find({}, {"Key1": 1, "Key2.EmbeddedKey1": 1})
+```
+
+* Search for value in array and return only this specific data instead of full array:
+```mongojs
+db.collection.find({"Key1": "Value1"}, {"Key1.$": 1})
+```
+
+* Slice. Limits amount of elements in array output:
+```mongojs
+db.collection.find({"Key1": "Value1"}, {"Key1": {$slice: 2}})
 ```
 
 ## Other
