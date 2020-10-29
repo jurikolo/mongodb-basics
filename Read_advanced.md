@@ -154,6 +154,27 @@ db.collection.find({"Key1": "Value1"}, {"Key1.$": 1})
 db.collection.find({"Key1": "Value1"}, {"Key1": {$slice: 2}})
 ```
 
+#Text search
+* Search by text, no need to specify key:
+```mongojs
+db.collection.find({$text: {$search: "value"}})
+```
+
+* Search for a phrase:
+```mongojs
+db.collection.find({$text: {$search: "\"my value\""}})
+```
+
+* Search for any match:
+```mongojs
+db.collection.find({$text: {$search: "my value"}})
+```
+
+* Get a score of records that match pattern:
+```mongojs
+db.collection.find({$text: {$search: "my value"}}, {score: {$meta: "textScore"}}).pretty()
+```
+
 ## Other
 * .sort(). Sorting. 1 - ascending, -1 - descending:
 ```mongojs
