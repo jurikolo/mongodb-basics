@@ -59,6 +59,11 @@ db.collection.createIndex({"Key1": 1}, {unique: true, partialFilterExpression: {
 db.collection.createIndex({"TimestampKey1": 1}, {expireAfterSeconds: 10})
 ```
 
+* Create index in background
+```mongojs
+db.collection.createIndex({"Key1": 1}, {background: true})
+```
+
 ## Text index
 It's allowed to create only 1 text index per collection.
 * Create text index on parameter with special indexing value "text":
@@ -69,6 +74,16 @@ db.collection.createIndex({"Key1": "text"})
 * Create combined text index to include multiple parameters:
 ```mongojs
 db.collection.createIndex({"Key1": "text", "Key2": "text"})
+```
+
+* Create combined text index and set weights for text search results (the higher the better):
+```mongojs
+db.collection.createIndex({"Key1": "text", "Key2": "text"}, {weights: {"Key1": 1, "Key2": 42}})
+```
+
+* Create text index and override default language:
+```mongojs
+db.collection.createIndex({"Key1": "text"}, {default_language: "russian"})
 ```
 
 See text search section in **Read_advanced.md** to learn how to search by text index.

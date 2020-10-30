@@ -175,6 +175,11 @@ db.collection.find({$text: {$search: "my value"}})
 db.collection.find({$text: {$search: "my value"}}, {score: {$meta: "textScore"}}).pretty()
 ```
 
+* Exclude some results:
+```mongojs
+db.collection.find({$text: {$search: "value -excluded-value"}})
+```
+
 ## Other
 * .sort(). Sorting. 1 - ascending, -1 - descending:
 ```mongojs
